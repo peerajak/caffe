@@ -1,0 +1,66 @@
+sudo apt-get install git
+
+After installed git, navigate to the NVIDIA/DIGITS’s GitHub page. Clone the project to the your computer.
+
+git clone https://github.com/NVIDIA/DIGITS.git 
+
+Now, you have DIGITS on your computer. Go to the DIGITS directory and switch the branch to digits-2.2 by: (optional, but recommended.)
+
+cd DIGITS
+git checkout digits-2.2
+
+Requirement No.2: caffe This step is more important than others. DIGITS requires caffe to work. But the caffe which is NVIDIA’s. Get it from GitHub page of NVIDIA’s caffe.
+
+git clone https://github.com/NVIDIA/caffe.git
+
+Now, you have caffe on your computer, too. Go to the caffe directory and switch the branch to caffe-0.12 by: (optional, but recommended.)
+
+cd caffe
+git checkout caffe-0.12
+
+caffe needs to compile before running.. and caffe has lots of requirements (CUDA, BLAS, Python) than DIGITS. They listed in here. Those’re not as easy as seems. Problems might occur but you can find recent answers on blogs or forums. If you already installed, very well.
+
+Let’s continue…
+
+to compile caffe, you need to configure the makefile first. In the root directory of caffe, you can see Makefile.config.example.
+
+Open it with a text editor and customize it. Lots of the options are valid for you, usually. Descriptions are on the above of the options. Also, it is recommended to add a line under the USE_CUDNN := 1 :
+
+USE_CNMEM := 1
+
+This option, improves your utilization.
+
+If you’re done, keep going…
+
+mv Makefile.config.example Makefile.config
+
+Now, we’re ready to compile.
+
+    make all
+    make test
+    make runtest
+    make pycaffe
+
+Run the commands one by one. If there is no error, fine. If you have problems, please send comment or google it.
+
+We’re ready to run DIGITS (I assume, you are ready for it.).
+
+Go to DIGITS directory and run:
+
+./digits-devserver
+
+DIGITS will ask you where it can find your compiled caffe.
+
+Default value for caffe_root "<PATHS>" invalid:
+caffe binary not found in PATH
+==================================== Caffe =====================================
+Where is caffe installed?
+Suggested values:
+(P*) [PATH/PYTHONPATH] <PATHS>
+>>  Type the full path of your caffe directory.  Moreover, I know some usual err
+
+-----------------------
+
+Then copy layer_factory.h and python/_caffe.cpp from version with python layer parameters
+
+
