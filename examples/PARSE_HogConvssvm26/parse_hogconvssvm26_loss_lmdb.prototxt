@@ -3,7 +3,7 @@ layer {
   type: "Data"
   top: "data"
   data_param {
-    source: "/working3/peerajak/ChulaQE/Semister9/1_caffe/examples/PARSE_HogConvssvm26_PCP6598/PARSE_traindata_lmdb"
+    source: "/working3/peerajak/ChulaQE/Semister9/1_caffe/examples/PARSE_HogConvssvm26/PARSE_traindata_lmdb"
     batch_size: 50
     backend: LMDB
     prefetch: 1
@@ -17,7 +17,7 @@ layer {
   type: "Data"
   top: "label"
   data_param {
-    source: "/working3/peerajak/ChulaQE/Semister9/1_caffe/examples/PARSE_HogConvssvm26_PCP6598/PARSE_trainlabels_lmdb"
+    source: "/working3/peerajak/ChulaQE/Semister9/1_caffe/examples/PARSE_HogConvssvm26/PARSE_trainlabels_lmdb"
     batch_size: 50
     backend: LMDB
     prefetch: 1

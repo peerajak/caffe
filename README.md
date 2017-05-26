@@ -1,3 +1,24 @@
+#Application of structured support vector machine backpropagation to a convolutional neural network for human pose estimation
+
+This work shows how to back propagate Structured SVM to Convolutional Neural Network.
+
+LICENSE: Free for everything. THis is the public work.
+Please cite: ( to be available )
+http://www.sciencedirect.com/science/article/pii/S0893608017300321
+
+Installation
+
+1. Install and Compile Caffe
+2. cd PARSE_createDb_and_CheckResults
+3. matlab
+4. in Matlab prompt: run_pycaffe_HOGssvm26_lmdb_preparation.m
+5. Close Matlab, cd $ROOTDIR
+6. ./examples/PARSE_HogConvssvm26/check_model_mat.sh 
+7. python examples/PARSE_HogConvssvm26/python_create_lmdb.py
+8. python examples/PARSE_HogConvssvm26/python_train.py 
+
+
+
 # Caffe
 
 Caffe is a deep learning framework made with expression, speed, and modularity in mind.

@@ -145,10 +145,10 @@ totalct=0;
             batch_counter = batch_counter +1;
             ilcounter = 0;
             if phase == 1
-            name_save= sprintf('../examples/PARSE_ssvm26_lmdb/train_batch_mat/train_batch_%03d.mat',batch_counter);
+            name_save= sprintf('../examples/PARSE_HogConvssvm26/train_batch_mat/train_batch_%03d.mat',batch_counter);
             disp(name_save);
             else
-            name_save= sprintf('../examples/PARSE_ssvm26_lmdb/test_batch_mat/test_batch_%03d.mat',batch_counter); 
+            name_save= sprintf('../examples/PARSE_HogConvssvm26/test_batch_mat/test_batch_%03d.mat',batch_counter); 
             disp(name_save);
             end
            % disp(name_save);
@@ -183,7 +183,7 @@ totalct=0;
 
 end
 %h5disp('/working3/peerajak/ChulaQE/Semister8/9_caffe-master/examples/MySubgradientSSVMNN_softmax/hdf5_data/train.h5');
-load modelpretrained_b4training5hog
+%load modelpretrained_b4training5hog
 
-save('../examples/PARSE_ssvm26_lmdb/ExpParamsHOGssvm26_lmdb_batch5','K','pa','experiment_param','model','modelpretrainedConvssvm32','modelb4training32','numPos','numNeg','numLevels','trained_model','numTest','batch_size','tolpart','num_train_batches','num_test_batches','featdan');
+save('../examples/PARSE_HogConvssvm26/ExpParamsHOGssvm26_lmdb_batch5','K','pa','experiment_param','model','numPos','numNeg','numLevels','numTest','batch_size','tolpart','num_train_batches','num_test_batches','featdan');
 %save('pycaffe_Spos','S');

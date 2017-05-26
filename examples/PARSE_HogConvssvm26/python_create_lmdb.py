@@ -13,7 +13,7 @@ from datetime import timedelta
 import re, fileinput, math
 
 
-model_mat='/working3/peerajak/ChulaQE/Semister9/1_caffe/examples/PARSE_HogConvssvm26_PCP6598/ExpParamsHOGssvm26_lmdb_batch5.mat'
+model_mat='/working3/peerajak/ChulaQE/Semister9/1_caffe2/examples/PARSE_HogConvssvm26/ExpParamsHOGssvm26_lmdb_batch5.mat'
 ExpParamObj = scipy.io.loadmat(model_mat)
 K = ExpParamObj.get('K').astype(np.int).squeeze() 
 pa = ExpParamObj.get('pa').astype(np.int)
@@ -29,16 +29,16 @@ batch_size = int(ExpParamObj.get('batch_size'))
 tolpart = int(ExpParamObj.get('tolpart'))
 
     
-train_batch_mat_path = 'examples/PARSE_HogConvssvm26_PCP6598/train_batch_mat'
+train_batch_mat_path = 'examples/PARSE_HogConvssvm26/train_batch_mat'
 from os import listdir
 from os.path import isfile, join
-matfiles = sorted([f for f in listdir(train_batch_mat_path) if isfile(join(train_batch_mat_path, f))])
+matfiles = sorted([f for f in listdir(train_batch_mat_path) if isfile(join(train_batch_mat_path, f)) and not f.startswith('.')])
 num_train_batches = len(matfiles)
 
 print('Writing labels')
 print 'NumLevels = ',numLevels,'batch_size',batch_size
-lmdb_data_name = 'examples/PARSE_HogConvssvm26_PCP6598/PARSE_traindata_lmdb'
-lmdb_labels_name = 'examples/PARSE_HogConvssvm26_PCP6598/PARSE_trainlabels_lmdb'
+lmdb_data_name = 'examples/PARSE_HogConvssvm26/PARSE_traindata_lmdb'
+lmdb_labels_name = 'examples/PARSE_HogConvssvm26/PARSE_trainlabels_lmdb'
 total_impyra_counter_images = 0;
 total_impyra_counter_labels = 0;
 for file_i in matfiles:

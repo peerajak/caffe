@@ -41,7 +41,7 @@ void Solver<Dtype>::Init(const SolverParameter& param) {
   // Scaffolding code
   InitTrainNet();
   if (Caffe::root_solver()) {
-    InitTestNets();
+   // InitTestNets();
     LOG(INFO) << "Solver scaffolding done.";
   }
   iter_ = 0;

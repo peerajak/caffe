@@ -16,7 +16,7 @@ class LossAugmentedInfLossLayer(caffe.Layer):
         
        
         n = bottom[0].data.shape[0]
-        model_mat='/working3/peerajak/ChulaQE/Semister9/1_caffe/examples/PARSE_ssvm26_lmdb_pretrained/ExpParamsHOGssvm26_lmdb_batch5.mat'
+        model_mat='/working3/peerajak/ChulaQE/Semister9/1_caffe2/examples/PARSE_HogConvssvm26/ExpParamsHOGssvm26_lmdb_batch5.mat'
         ExpParamObj = scipy.io.loadmat(model_mat)      
         pretrained_modelObj = scipy.io.loadmat('/working3/peerajak/ChulaQE/Semister10/3_pose-release-ver1.2/code-full/pretrained_model_randdefs.mat')
         self.K = ExpParamObj.get('K').astype(np.int).squeeze() 
@@ -132,7 +132,7 @@ class LossAugmentedInfLossLayer(caffe.Layer):
                 yibatch_part_dobj_dRespmaps[ibatch*self.numLevels+opt_level,convssvm_filter_th,inf_yi_boxes[part_l,1],inf_yi_boxes[part_l,2]]=1 
                 score_yi += respmaps[ibatch*self.numLevels+opt_level,convssvm_filter_th,inf_yi_boxes[part_l,1],inf_yi_boxes[part_l,2]]
             
-            #scipy.io.savemat('MySubGradientSSVM_1_3_is_1_2/learning/SSVM/test_correctness/x_y_feat_python.mat', mdict={'x_y_feat_ihdf5': x_y_feat_i,'x_yhat_feat_ihdf5': x_yhat_feat_i,'inf_yhat_boxes':inf_yhat_boxes,'inf_yi_boxes':inf_yi_boxes,'lopt_level':lopt_level,'opt_level':opt_level,'loss_y_yhat':loss_y_yhat})
+            #scipy.io.savemat('PARSE_createDb_and_CheckResults/learning/SSVM/test_correctness/x_y_feat_python.mat', mdict={'x_y_feat_ihdf5': x_y_feat_i,'x_yhat_feat_ihdf5': x_yhat_feat_i,'inf_yhat_boxes':inf_yhat_boxes,'inf_yi_boxes':inf_yi_boxes,'lopt_level':lopt_level,'opt_level':opt_level,'loss_y_yhat':loss_y_yhat})
             slack[ibatch] = loss_y_yhat  + np.dot( wloss,(x_yhat_feat_i - x_y_feat_i)).squeeze() + score_yhat - score_yi
             print 'score_yhat:',score_yhat
             print 'score_yi:',score_yi
@@ -154,10 +154,10 @@ class LossAugmentedInfLossLayer(caffe.Layer):
         
 
         top[0].data[...] = Loss
-        #scipy.io.savemat('MySubGradientSSVM_1_3_is_1_2/learning/SSVM/test_correctness/LossFeat_python.mat', mdict={'Loss': Loss})
+        #scipy.io.savemat('PARSE_createDb_and_CheckResults/learning/SSVM/test_correctness/LossFeat_python.mat', mdict={'Loss': Loss})
         self.dobj_dRespmaps = 1.0/self.batch_size*(yhatibatch_part_dobj_dRespmaps-yibatch_part_dobj_dRespmaps)
         self.grad_wloss = 1.0/self.batch_size*sum_delta_phi
-        #scipy.io.savemat('MySubGradientSSVM_1_3_is_1_2/learning/SSVM/test_correctness/grad_wlosspython.mat', mdict={'grad_wlosshdf5': self.grad_wloss,'dobj_dRespmapshdf5': self.dobj_dRespmaps,'wsol_py':wloss})
+        #scipy.io.savemat('PARSE_createDb_and_CheckResults/learning/SSVM/test_correctness/grad_wlosspython.mat', mdict={'grad_wlosshdf5': self.grad_wloss,'dobj_dRespmapshdf5': self.dobj_dRespmaps,'wsol_py':wloss})
         #print '---------------------------end forward()------------------------------'
         
 
@@ -167,7 +167,7 @@ class LossAugmentedInfLossLayer(caffe.Layer):
         
         bottom[0].diff[...] = self.dobj_dRespmaps 
         self.blobs[0].diff[...] = self.grad_wloss
-        scipy.io.savemat('MySubGradientSSVM_1_3_is_1_2/learning/SSVM/test_correctness/grad_wlosspython_lmdb.mat', mdict={'grad_wlosslmdb_bw': self.blobs[0].diff,'dobj_dRespmapslmdb_bw': bottom[0].diff})
+        #scipy.io.savemat('PARSE_createDb_and_CheckResults/learning/SSVM/test_correctness/grad_wlosspython_lmdb.mat', mdict={'grad_wlosslmdb_bw': self.blobs[0].diff,'dobj_dRespmapslmdb_bw': bottom[0].diff})
         #print(self.blobs[0].diff)#= np.ones([10,10],dtype=np.float)
 
 
@@ -691,7 +691,7 @@ class LossAugmentedInfLossLayer(caffe.Layer):
                     #print 'respmaps[rlevel].shape',respmaps[rlevel+ibatch*self.numLevels,:,:,:].shape
                     thislevel_respmaps = respmaps[rlevel+ibatch*self.numLevels,:,0:thislevel_level_sizes[0]-sizy+1,0:thislevel_level_sizes[1]-sizx+1].copy()
                     #if rlevel==2 and k ==25:
-                        #scipy.io.savemat('MySubGradientSSVM_1_3_is_1_2/Thislevel_respmaps.mat', mdict={'thislevel_respmaps': thislevel_respmaps})
+                        #scipy.io.savemat('PARSE_createDb_and_CheckResults/Thislevel_respmaps.mat', mdict={'thislevel_respmaps': thislevel_respmaps})
                     #print 'thislevel_respmaps.shape',thislevel_respmaps.shape
                     #thislevel_respmaps = np.pad(thislevel_respmaps, ((0,0),(0,thislevel_level_sizes[0]-thislevel_respmaps.shape[1]-5+1),(0,0)),mode='constant')
                     #thislevel_respmaps = np.pad(thislevel_respmaps, ((0,0),(0,0),(0,thislevel_level_sizes[1]-thislevel_respmaps.shape[2]-5+1)),mode='constant')
@@ -714,12 +714,12 @@ class LossAugmentedInfLossLayer(caffe.Layer):
                         if phase == 1:
                             ovmask, lossscore = self.testoverlap(parts[0,k]['sizx'][0,fi],parts[0,k]['sizy'][0,fi],pyras[0,ibatch],rlevel,yi[k,:],overlap,self.tolpart)
                             #if rlevel==2 and k ==25 and fi==1:
-                                #scipy.io.savemat('MySubGradientSSVM_1_3_is_1_2/ovmask_level3_k26_fi1.mat', mdict={'ovmask_py': ovmask})
+                                #scipy.io.savemat('PARSE_createDb_and_CheckResults/ovmask_level3_k26_fi1.mat', mdict={'ovmask_py': ovmask})
                             #print 'rlevel:',rlevel,'mask shape',ovmask.shape,'parts shape', parts[0,k]['score'][fi,:,:].shape,'sizx',parts[0,k]['sizx'][0,fi],'sizey',parts[0,k]['sizy'][0,fi],yi[k,:],'nonzero ovmask',np.count_nonzero(ovmask)
                             #if np.count_nonzero(ovmask)>0 and not saved_flag:
                                 #print np.nonzero(ovmask)
                                 #print parts[0,k]['score'][fi,:,:][ovmask!=0] 
-                                #scipy.io.savemat('MySubGradientSSVM_1_3_is_1_2/partlevel0_fi0_k0.mat', mdict={'partlevel0_fi0_k0': parts,'pyovmask':ovmask,'pyk':k,'pyfi':fi,'thislevel_respmaps':thislevel_respmaps,'numFilters_before_kthparts':numFilters_before_kthparts,'numFilters_before_kthparts':numFilters_before_kthparts,'pyrlevel':rlevel})
+                                #scipy.io.savemat('PARSE_createDb_and_CheckResults/partlevel0_fi0_k0.mat', mdict={'partlevel0_fi0_k0': parts,'pyovmask':ovmask,'pyk':k,'pyfi':fi,'thislevel_respmaps':thislevel_respmaps,'numFilters_before_kthparts':numFilters_before_kthparts,'numFilters_before_kthparts':numFilters_before_kthparts,'pyrlevel':rlevel})
                                 #saved_flag = True;
                             parts[0,k]['score'][fi,:,:][ovmask==0] = -INF                         
                             lparts[0,k]['score'][fi,:,:] = (lparts[0,k]['score'][fi,:,:] + lossscore).copy()
@@ -729,7 +729,7 @@ class LossAugmentedInfLossLayer(caffe.Layer):
                     #end fi
                 ##endfor k 
                 #if rlevel==2:
-                    #scipy.io.savemat('MySubGradientSSVM_1_3_is_1_2/partsscore_pyb4.mat', mdict={'partsb4_py':parts})              
+                    #scipy.io.savemat('PARSE_createDb_and_CheckResults/partsscore_pyb4.mat', mdict={'partsb4_py':parts})              
                 for k in range(self.tolpart-1,0,-1):
                     par = parts[0,k]['parent'].squeeze()-1
                     #print 'par',par,'k',k 
@@ -737,7 +737,7 @@ class LossAugmentedInfLossLayer(caffe.Layer):
                         #parts_pass = parts.copy()
                     msg,Ix,Iy,Ik = self.passmsg(parts[0,k],parts[0,par])
                     #if rlevel==2 and k==18:
-                        #scipy.io.savemat('MySubGradientSSVM_1_3_is_1_2/msg19_py.mat', mdict={'msg19_py':msg})
+                        #scipy.io.savemat('PARSE_createDb_and_CheckResults/msg19_py.mat', mdict={'msg19_py':msg})
                     #print 'Ix,y,k shape',Ix.shape, Iy.shape, Ik.shape
                     parts[0,k]['Ix'] = Ix.copy()
                     parts[0,k]['Iy'] = Iy.copy()
@@ -752,7 +752,7 @@ class LossAugmentedInfLossLayer(caffe.Layer):
                 ##endfor k
                 #% Add bias to root score
                 #if rlevel==2:
-                    #scipy.io.savemat('MySubGradientSSVM_1_3_is_1_2/partsscore_py.mat', mdict={'parts_py':parts})
+                    #scipy.io.savemat('PARSE_createDb_and_CheckResults/partsscore_py.mat', mdict={'parts_py':parts})
                 parts[0,0]['score'] = (parts[0,0]['score'] + parts[0,0]['b']).copy()
                 rscore = parts[0,0]['score'].max(axis=0)
                 Ik = parts[0,0]['score'].argmax(axis=0)
@@ -767,7 +767,7 @@ class LossAugmentedInfLossLayer(caffe.Layer):
                     y = int(Y[i])
                     k = int(Ik[y,x])
                     print 'root at x=',x,',y=',y,',k=',k,',level=',rlevel,'thresh update to',thresh
-                    #scipy.io.savemat('MySubGradientSSVM_1_3_is_1_2/pyrscore.mat', mdict={'pyrscore': rscore})
+                    #scipy.io.savemat('PARSE_createDb_and_CheckResults/pyrscore.mat', mdict={'pyrscore': rscore})
                     opt_level = rlevel
                     inf_yi_boxes,ex_i = self.backtrack(x,y,k,parts,opt_level)
                     maxval = rscore[y,x]

@@ -1,4 +1,4 @@
-net: "examples/PARSE_HogConvssvm26_PCP6598/parse_hogconvssvm26_loss_lmdb.prototxt"
+net: "examples/PARSE_HogConvssvm26/parse_hogconvssvm26_loss_lmdb.prototxt"
 test_iter: 10000000
 test_interval: 10000000
 test_initialization: false
@@ -9,7 +9,7 @@ lr_policy: "step"
 gamma: 0.75
 stepsize: 2000
 display: 100
-max_iter: 4000
+max_iter: 100
 momentum: 0.0
 snapshot: 4000
-snapshot_prefix: "examples/PARSE_HogConvssvm26_PCP6598/save/parsehogconvssvm26_"
+snapshot_prefix: "examples/PARSE_HogConvssvm26/save/parsehogconvssvm26_"
