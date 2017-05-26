@@ -65,10 +65,10 @@ experiment_param.HOG_coordinate_overlap = HOG_coordinate_overlap;
 %model = inittreemodel(name,pos,K,pa);
 model = inittreemodel_Hogssvm(name,pos,K,pa);  
 numLevels = model.interval;
-load trained_model
-for i=1:133  
-model.defs(i).anchor=trained_model.defs(i).anchor; 
-end
+%load trained_model
+%for i=1:133  
+%model.defs(i).anchor=trained_model.defs(i).anchor; 
+%end
 %trained_model = initmodel_Hogssvm_with_trained_filters(name,pos,K,pa,sbin);
 %load('modelb4training_5_Hog.mat')
 % wsol = model2vec(model);
@@ -78,7 +78,7 @@ end
 S=[];%empty structure to be inserted with positive data. 
 Stest=[];
 Strain=[];
- [Strain npos] = poslatent(Strain,name,1, model, pos,numPos);
+ [Strain npos] = poslatent(Strain,name,1, model, pos);
 % [Stest ntest] = poslatent(Stest,name,1, model, pos);
 %[Strain npos] = pycaffe_poslatent(Strain,name, model, pos, experiment_param.numPos);
 %[Stest ntest] = pycaffe_poslatent(Stest,name, model, test, numTest);
